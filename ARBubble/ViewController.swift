@@ -18,7 +18,6 @@ struct GlobalData {
 class ViewController: UIViewController, ARSCNViewDelegate {
     private var globalData: GlobalData = GlobalData(ch_pos: SIMD2<Float>(0,0), d: Float(1e6), time: Float(0))
     private var startDate: Date = Date()
-    let sphereNode = SCNNode()
 
     @IBOutlet var sceneView: ARSCNView!
     
@@ -37,14 +36,27 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         configuration.planeDetection = .horizontal
         sceneView.session.run(configuration)
 
-        Timer.scheduledTimer(withTimeInterval: 1.0/60.0, repeats: true, block: { (timer) in
-            self.updateTime(self.sphereNode)
-        })
 
     }
 
+    func updateTime(_ node: SCNNode) {
+        let time = Float(Date().timeIntervalSince(startDate))
+        globalData.time = time
+        let uniformsData = Data(bytes: &globalData, count: MemoryLayout<GlobalData>.size)
+        node.geometry?.firstMaterial?.setValue(uniformsData, forKey: "globalData")
+    }
+    
     func renderer(_ renderer: SCNSceneRenderer, didAdd node: SCNNode, for anchor: ARAnchor) {
-        
+        addBubble(node: node)
+    }
+    
+    func addBubble(node: SCNNode) {
+        let sphereNode = SCNNode()
+
+        Timer.scheduledTimer(withTimeInterval: 1.0/60.0, repeats: true, block: { (timer) in
+            self.updateTime(sphereNode)
+        })
+
         sphereNode.geometry = SCNSphere(radius: 0.05)
         sphereNode.position.y += Float(0.05)
         
@@ -61,10 +73,14 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         node.addChildNode(sphereNode)
     }
 
-    func updateTime(_ node: SCNNode) {
-        let time = Float(Date().timeIntervalSince(startDate))
-        globalData.time = time
-        let uniformsData = Data(bytes: &globalData, count: MemoryLayout<GlobalData>.size)
-        node.geometry?.firstMaterial?.setValue(uniformsData, forKey: "globalData")
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        guard let touch = touches.first else {return}
+        let touchPos = touch.location(in: sceneView)
+        let hitTest = sceneView.hitTest(touchPos, types: .existingPlaneUsingExtent)
+        if !hitTest.isEmpty {
+            let anchor = ARAnchor(transform: hitTest.first!.worldTransform)
+            sceneView.session.add(anchor: anchor)
+        }
+        
     }
 }
