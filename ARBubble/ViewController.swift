@@ -80,7 +80,6 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         if !hitTest.isEmpty {
             let anchor = ARAnchor(transform: hitTest.first!.worldTransform)
             sceneView.session.add(anchor: anchor)
-        }
-        
+        }        
     }
 }
