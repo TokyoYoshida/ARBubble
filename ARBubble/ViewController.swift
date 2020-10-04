@@ -7,19 +7,39 @@
 //
 
 import UIKit
-import RealityKit
+import ARKit
 
-class ViewController: UIViewController {
+class ViewController: UIViewController, ARSCNViewDelegate {
     
-    @IBOutlet var arView: ARView!
+    @IBOutlet var sceneView: ARSCNView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // Load the "Box" scene from the "Experience" Reality File
-        let boxAnchor = try! Experience.loadBox()
+        sceneView.delegate = self
         
-        // Add the box anchor to the scene
-        arView.scene.anchors.append(boxAnchor)
+        sceneView.scene = SCNScene()
+        
+        sceneView.debugOptions = [ARSCNDebugOptions.showFeaturePoints]
+        
+        sceneView.autoenablesDefaultLighting = true;
+
+        let configuration = ARWorldTrackingConfiguration()
+        configuration.planeDetection = .horizontal
+        sceneView.session.run(configuration)
+    }
+
+    func renderer(_ renderer: SCNSceneRenderer, didAdd node: SCNNode, for anchor: ARAnchor) {
+        let sphereNode = SCNNode()
+        
+        sphereNode.geometry = SCNSphere(radius: 0.05)
+        sphereNode.position.y += Float(0.05)
+        
+        let program = SCNProgram()
+        program.vertexFunctionName = "vertexShader2"
+        program.fragmentFunctionName = "fragmentShader2"
+        sphereNode.geometry?.firstMaterial?.program = program
+        
+        node.addChildNode(sphereNode)
     }
 }
