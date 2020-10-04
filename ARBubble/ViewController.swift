@@ -36,8 +36,8 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         sphereNode.position.y += Float(0.05)
         
         let program = SCNProgram()
-        program.vertexFunctionName = "vertexShader2"
-        program.fragmentFunctionName = "fragmentShader2"
+        program.vertexFunctionName = "vertexShader"
+        program.fragmentFunctionName = "fragmentShader"
         sphereNode.geometry?.firstMaterial?.program = program
         
         node.addChildNode(sphereNode)

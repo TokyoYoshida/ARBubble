@@ -28,7 +28,7 @@ struct ColorInOut
     float2 texCoords;
 };
 
-vertex ColorInOut vertexShader2(VertexInput          in       [[ stage_in ]],
+vertex ColorInOut vertexShader(VertexInput          in       [[ stage_in ]],
                                constant NodeBuffer& scn_node [[ buffer(0) ]])
 {
     ColorInOut out;
@@ -45,7 +45,7 @@ float3 hsv2rgb(  float3 c )
     return c.z * mix( float3(1.0), rgb, c.y);
 }
 
-fragment float4 fragmentShader2(ColorInOut in          [[ stage_in] ],
+fragment float4 fragmentShader(ColorInOut in          [[ stage_in] ],
                               constant   float& time [[ buffer(0) ]])
 {
     float2 position = in.texCoords;
