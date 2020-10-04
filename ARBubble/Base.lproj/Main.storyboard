@@ -3,6 +3,7 @@
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -10,12 +11,37 @@
         <scene sceneID="tne-QT-ifu">
             <objects>
                 <viewController id="BYZ-38-t0r" userLabel="ARView" customClass="ViewController" customModule="ARBubble" customModuleProvider="target" sceneMemberID="viewController">
-                    <arscnView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" id="sEk-k2-TGV">
+                    <view key="view" contentMode="scaleToFill" id="gOo-uv-Bba">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                    </arscnView>
+                        <subviews>
+                            <arscnView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5Bf-ZL-PQj">
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                            </arscnView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pfD-wb-qSs">
+                                <rect key="frame" x="190" y="832" width="34" height="30"/>
+                                <state key="normal" title="Start">
+                                    <color key="titleColor" systemColor="systemRedColor" red="1" green="0.23137254900000001" blue="0.18823529410000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                </state>
+                                <connections>
+                                    <action selector="tappedButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="FJn-4R-Ajd"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <constraints>
+                            <constraint firstItem="5Bf-ZL-PQj" firstAttribute="top" secondItem="gOo-uv-Bba" secondAttribute="top" id="BKF-i0-ctq"/>
+                            <constraint firstItem="cif-hb-00K" firstAttribute="trailing" secondItem="5Bf-ZL-PQj" secondAttribute="trailing" id="M0f-kq-chE"/>
+                            <constraint firstItem="cif-hb-00K" firstAttribute="bottom" secondItem="pfD-wb-qSs" secondAttribute="bottom" id="hZt-or-2Ag"/>
+                            <constraint firstItem="pfD-wb-qSs" firstAttribute="centerX" secondItem="gOo-uv-Bba" secondAttribute="centerX" id="ip0-Bn-Vxd"/>
+                            <constraint firstAttribute="bottom" secondItem="5Bf-ZL-PQj" secondAttribute="bottom" id="rl1-aj-TMv"/>
+                            <constraint firstItem="5Bf-ZL-PQj" firstAttribute="leading" secondItem="cif-hb-00K" secondAttribute="leading" id="tZ5-e2-4wQ"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="cif-hb-00K"/>
+                    </view>
                     <connections>
-                        <outlet property="sceneView" destination="sEk-k2-TGV" id="6u6-Fc-UDz"/>
+                        <outlet property="button" destination="pfD-wb-qSs" id="nZm-7S-1CN"/>
+                        <outlet property="sceneView" destination="5Bf-ZL-PQj" id="tGO-Z3-yLC"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>

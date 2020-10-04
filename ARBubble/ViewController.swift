@@ -8,6 +8,7 @@
 
 import UIKit
 import ARKit
+import ReplayKit
 
 struct GlobalData {
     var ch_pos: SIMD2<Float>//   = float2 (0.0, 0.0);             // character position(X,Y)
@@ -16,8 +17,11 @@ struct GlobalData {
 }
 
 class ViewController: UIViewController, ARSCNViewDelegate {
+    @IBOutlet weak var button: UIButton!
+    
     private var globalData: GlobalData = GlobalData(ch_pos: SIMD2<Float>(0,0), d: Float(1e6), time: Float(0))
     private var startDate: Date = Date()
+    var nowRecording: Bool = false
 
     @IBOutlet var sceneView: ARSCNView!
     
@@ -84,6 +88,47 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         if !hitTest.isEmpty {
             let anchor = ARAnchor(transform: hitTest.first!.worldTransform)
             sceneView.session.add(anchor: anchor)
+        }
+    }
+
+    @IBAction func tappedButton(_ sender: Any) {
+        if nowRecording {
+            nowRecording = false
+            button.setTitle("Start", for: .normal)
+            stopRecording()
+        } else {
+            nowRecording = true
+            button.setTitle("Stop", for: .normal)
+            startRecording()
+        }
+    }
+}
+
+extension ViewController {
+    func startRecording() {
+        guard !RPScreenRecorder.shared().isRecording else { return }
+        RPScreenRecorder.shared().startRecording(handler: { (error) in
+            if let error = error {
+                debugPrint(#function, "recording something failed", error)
+            }
+        })
+    }
+
+    func stopRecording() {
+        guard RPScreenRecorder.shared().isRecording else { return }
+        RPScreenRecorder.shared().stopRecording(handler: { (previewViewController, error) in
+            guard let previewViewController = previewViewController else { return }
+            previewViewController.previewControllerDelegate = self
+
+            self.present(previewViewController, animated: true, completion: nil)
+        })
+    }
+}
+
+extension ViewController: RPPreviewViewControllerDelegate {
+    func previewControllerDidFinish(_ previewController: RPPreviewViewController) {
+        DispatchQueue.main.async {
+            previewController.dismiss(animated: true, completion: nil)
         }
     }
 }
