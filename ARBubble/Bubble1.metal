@@ -61,6 +61,6 @@ fragment float4 fragmentShader(ColorInOut in          [[ stage_in] ],
     
     color = hsv2rgb(float3(time * 0.3 + position.x - position.y,0.5,1.0));
 
-    return float4(color,0.5);
+    return float4(color,0.4);
 }
 
