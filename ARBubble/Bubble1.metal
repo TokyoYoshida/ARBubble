@@ -13,6 +13,12 @@ using namespace metal;
 
 #include <SceneKit/scn_metal>
 
+struct GlobalData {
+    float2 ch_pos;//   = float2 (0.0, 0.0);             // character position(X,Y)
+    float d;// = 1e6;
+    float time;
+};
+
 struct VertexInput {
     float3 position  [[attribute(SCNVertexSemanticPosition)]];
     float2 texCoords [[attribute(SCNVertexSemanticTexcoord0)]];
@@ -46,9 +52,10 @@ float3 hsv2rgb(  float3 c )
 }
 
 fragment float4 fragmentShader(ColorInOut in          [[ stage_in] ],
-                              constant   float& time [[ buffer(0) ]])
+                              device GlobalData &globalData [[buffer(1)]])
 {
     float2 position = in.texCoords;
+    float time =globalData.time;
     
     float3 color = float3(0.1, 0.1, 0.1);
     
