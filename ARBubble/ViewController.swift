@@ -47,6 +47,7 @@ class ViewController: UIViewController, ARSCNViewDelegate {
     }
     
     func renderer(_ renderer: SCNSceneRenderer, didAdd node: SCNNode, for anchor: ARAnchor) {
+        guard !(anchor is ARPlaneAnchor) else { return }
         addBubble(node: node)
     }
     
@@ -57,7 +58,7 @@ class ViewController: UIViewController, ARSCNViewDelegate {
             self.updateTime(sphereNode)
         })
 
-        sphereNode.geometry = SCNSphere(radius: 0.05)
+        sphereNode.geometry = SCNSphere(radius: 0.02)
         sphereNode.position.y += Float(0.05)
         
         let program = SCNProgram()
@@ -71,6 +72,9 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         sphereNode.geometry?.firstMaterial?.setValue(uniformsData, forKey: "globalData")
 
         node.addChildNode(sphereNode)
+        
+        node.runAction(SCNAction.repeatForever(SCNAction.move(by: SCNVector3(0, 0.1, 0), duration: 1)))
+
     }
 
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -80,6 +84,6 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         if !hitTest.isEmpty {
             let anchor = ARAnchor(transform: hitTest.first!.worldTransform)
             sceneView.session.add(anchor: anchor)
-        }        
+        }
     }
 }
