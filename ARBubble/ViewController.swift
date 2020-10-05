@@ -11,15 +11,13 @@ import ARKit
 import ReplayKit
 
 struct GlobalData {
-    var ch_pos: SIMD2<Float>//   = float2 (0.0, 0.0);             // character position(X,Y)
-    var d: Float// = 1e6;
     var time: Float
 }
 
 class ViewController: UIViewController, ARSCNViewDelegate {
     @IBOutlet weak var button: UIButton!
     
-    private var globalData: GlobalData = GlobalData(ch_pos: SIMD2<Float>(0,0), d: Float(1e6), time: Float(0))
+    private var globalData: GlobalData = GlobalData(time: Float(0))
     private var startDate: Date = Date()
     var nowRecording: Bool = false
 
@@ -39,8 +37,6 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         let configuration = ARWorldTrackingConfiguration()
         configuration.planeDetection = .horizontal
         sceneView.session.run(configuration)
-
-
     }
 
     func updateTime(_ node: SCNNode) {
@@ -78,7 +74,6 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         node.addChildNode(sphereNode)
         
         node.runAction(SCNAction.repeatForever(SCNAction.move(by: SCNVector3(0, 0.1, 0), duration: 1)))
-
     }
 
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {

@@ -14,8 +14,6 @@ using namespace metal;
 #include <SceneKit/scn_metal>
 
 struct GlobalData {
-    float2 ch_pos;//   = float2 (0.0, 0.0);             // character position(X,Y)
-    float d;// = 1e6;
     float time;
 };
 
