@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16097.3" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16097.3" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="7Ac-eq-sLb">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
@@ -39,6 +39,7 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="cif-hb-00K"/>
                     </view>
+                    <navigationItem key="navigationItem" id="YHy-Qm-ecB"/>
                     <connections>
                         <outlet property="button" destination="pfD-wb-qSs" id="nZm-7S-1CN"/>
                         <outlet property="sceneView" destination="5Bf-ZL-PQj" id="tGO-Z3-yLC"/>
@@ -46,7 +47,49 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="138" y="134"/>
+            <point key="canvasLocation" x="680" y="726"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="G45-hg-vAK">
+            <objects>
+                <navigationController id="7Ac-eq-sLb" sceneMemberID="viewController">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="LYZ-JA-esl">
+                        <rect key="frame" x="0.0" y="44" width="414" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="iTj-k6-5Xu" kind="relationship" relationship="rootViewController" id="YE1-dB-ISQ"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Z6f-2L-JRp" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-754" y="701"/>
+        </scene>
+        <!--View Controller-->
+        <scene sceneID="bVw-ZE-7gZ">
+            <objects>
+                <viewController id="iTj-k6-5Xu" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="6aE-Ki-1JX">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="u5R-iq-Qdb">
+                                <rect key="frame" x="156" y="288" width="102" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Normal Bubble"/>
+                                <connections>
+                                    <segue destination="BYZ-38-t0r" kind="presentation" modalPresentationStyle="fullScreen" id="Jm9-nY-Xzc"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <viewLayoutGuide key="safeArea" id="oj0-Jd-84s"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="4ex-ev-YpZ"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="JSX-i5-2ju" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-38" y="720"/>
         </scene>
     </scenes>
 </document>
