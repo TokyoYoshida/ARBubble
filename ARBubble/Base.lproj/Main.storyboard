@@ -81,6 +81,14 @@
                                     <segue destination="BYZ-38-t0r" kind="presentation" modalPresentationStyle="fullScreen" id="Jm9-nY-Xzc"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lIS-HA-5bs">
+                                <rect key="frame" x="161" y="379" width="93" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Water Bubble"/>
+                                <connections>
+                                    <segue destination="N0R-BN-AlC" kind="presentation" modalPresentationStyle="fullScreen" id="QHa-0h-F24"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <viewLayoutGuide key="safeArea" id="oj0-Jd-84s"/>
@@ -90,6 +98,48 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="JSX-i5-2ju" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-38" y="720"/>
+        </scene>
+        <!--ARView2-->
+        <scene sceneID="iLF-DH-E7h">
+            <objects>
+                <viewController id="N0R-BN-AlC" userLabel="ARView2" customClass="WaterBubbleViewController" customModule="ARBubble" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="vWN-w9-PZq">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <arscnView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="MGv-zT-Ybu">
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                            </arscnView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="c8P-iT-2lS">
+                                <rect key="frame" x="190" y="832" width="34" height="30"/>
+                                <state key="normal" title="Start">
+                                    <color key="titleColor" systemColor="systemRedColor" red="1" green="0.23137254900000001" blue="0.18823529410000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                </state>
+                                <connections>
+                                    <action selector="tappedButton:" destination="N0R-BN-AlC" eventType="touchUpInside" id="hBg-aW-mdQ"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <constraints>
+                            <constraint firstItem="MGv-zT-Ybu" firstAttribute="top" secondItem="vWN-w9-PZq" secondAttribute="top" id="7Sc-oC-vIf"/>
+                            <constraint firstItem="MGv-zT-Ybu" firstAttribute="leading" secondItem="xX8-ka-VSk" secondAttribute="leading" id="GLz-ei-3UX"/>
+                            <constraint firstItem="xX8-ka-VSk" firstAttribute="bottom" secondItem="c8P-iT-2lS" secondAttribute="bottom" id="XaD-Ks-zGm"/>
+                            <constraint firstItem="xX8-ka-VSk" firstAttribute="trailing" secondItem="MGv-zT-Ybu" secondAttribute="trailing" id="d6c-Jg-4zi"/>
+                            <constraint firstAttribute="bottom" secondItem="MGv-zT-Ybu" secondAttribute="bottom" id="f9G-Px-Vhj"/>
+                            <constraint firstItem="c8P-iT-2lS" firstAttribute="centerX" secondItem="vWN-w9-PZq" secondAttribute="centerX" id="wJa-tg-Htq"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="xX8-ka-VSk"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="0Xn-iD-U0N"/>
+                    <connections>
+                        <outlet property="button" destination="c8P-iT-2lS" id="5wg-cD-iAp"/>
+                        <outlet property="sceneView" destination="MGv-zT-Ybu" id="Gp0-we-YhL"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="1cF-Tm-wRc" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="700" y="1395"/>
         </scene>
     </scenes>
 </document>
