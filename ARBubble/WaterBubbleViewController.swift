@@ -66,10 +66,22 @@ class WaterBubbleViewController: UIViewController, ARSCNViewDelegate {
         globalData.time = time
         let uniformsData = Data(bytes: &globalData, count: MemoryLayout<GlobalData>.size)
         sphereNode.geometry?.firstMaterial?.setValue(uniformsData, forKey: "globalData")
-
+        
         node.addChildNode(sphereNode)
         
         node.runAction(SCNAction.repeatForever(SCNAction.move(by: SCNVector3(0, 0.1, 0), duration: 1)))
+    }
+    
+    func captureCamera() -> CGImage?{
+        guard let frame = sceneView.session.currentFrame else {return nil}
+        let pixelBuffer = frame.capturedImage
+
+        let image = CIImage(cvPixelBuffer: pixelBuffer)
+
+        let context = CIContext(options:nil)
+        guard let cameraImage = context.createCGImage(image, from: image.extent) else {return nil}
+
+        return cameraImage
     }
 
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
