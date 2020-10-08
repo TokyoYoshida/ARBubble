@@ -57,16 +57,19 @@ class WaterBubbleViewController: UIViewController, ARSCNViewDelegate {
         sphereNode.geometry = SCNSphere(radius: 0.02)
         sphereNode.position.y += Float(0.05)
         
+        guard let material = sphereNode.geometry?.firstMaterial else {return}
         let program = SCNProgram()
         program.vertexFunctionName = "vertexShader"
         program.fragmentFunctionName = "fragmentShader"
-        sphereNode.geometry?.firstMaterial?.program = program
-        
+    //        sphereNode.geometry?.firstMaterial?.program = program
+            
         let time = Float(Date().timeIntervalSince(startDate))
         globalData.time = time
-        let uniformsData = Data(bytes: &globalData, count: MemoryLayout<GlobalData>.size)
-        sphereNode.geometry?.firstMaterial?.setValue(uniformsData, forKey: "globalData")
-        
+//        let uniformsData = Data(bytes: &globalData, count: MemoryLayout<GlobalData>.size)
+//        sphereNode.geometry?.firstMaterial?.setValue(uniformsData, forKey: "globalData")
+        material.diffuse.contents = UIColor.init(red: 175/255, green: 255/255, blue: 255/255, alpha: 200/255)
+        material.lightingModel = .lambert
+            
         node.addChildNode(sphereNode)
         
         node.runAction(SCNAction.repeatForever(SCNAction.move(by: SCNVector3(0, 0.1, 0), duration: 1)))
