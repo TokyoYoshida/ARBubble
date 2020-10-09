@@ -64,6 +64,7 @@ vertex ColorInOut2 vertexShader2(VertexInput2          in       [[ stage_in ]],
     return out;
 }
 
+# quote from: http://glslsandbox.com/e#39055.2
 float4 waterColor(float time, float2 sp) {
     float2 p = sp * 15.0 - float2(20.0);
     float2 i = p;
