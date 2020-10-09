@@ -16,7 +16,8 @@ class WaterBubbleViewController: UIViewController, ARSCNViewDelegate {
     private var globalData: GlobalData = GlobalData(time: Float(0))
     private var startDate: Date = Date()
     var nowRecording: Bool = false
-
+    let bubbleNodeName = "Bubble"
+    
     @IBOutlet var sceneView: ARSCNView!
     
     override func viewDidLoad() {
@@ -33,6 +34,21 @@ class WaterBubbleViewController: UIViewController, ARSCNViewDelegate {
         let configuration = ARWorldTrackingConfiguration()
         configuration.planeDetection = .horizontal
         sceneView.session.run(configuration)
+
+        Timer.scheduledTimer(withTimeInterval: 1.0/60.0, repeats: true, block: { (timer) in
+            self.updateNodesTexture()
+        })
+    }
+    
+    func updateNodesTexture() {
+        let cameraImage = captureCamera()
+        let nodes = sceneView.scene.rootNode.childNodes.compactMap {
+            $0.childNode(withName: bubbleNodeName, recursively: true)
+        }
+        for node in nodes {
+            guard let material = node.geometry?.firstMaterial else {return}
+            material.diffuse.contents = cameraImage
+        }
     }
 
     func updateTime(_ node: SCNNode) {
@@ -67,12 +83,15 @@ class WaterBubbleViewController: UIViewController, ARSCNViewDelegate {
         globalData.time = time
 //        let uniformsData = Data(bytes: &globalData, count: MemoryLayout<GlobalData>.size)
 //        sphereNode.geometry?.firstMaterial?.setValue(uniformsData, forKey: "globalData")
-        material.diffuse.contents = UIColor.init(red: 175/255, green: 255/255, blue: 255/255, alpha: 200/255)
+        let cameraImage = captureCamera()
+        material.diffuse.contents = cameraImage
         material.lightingModel = .lambert
+        sphereNode.name = bubbleNodeName
             
+
         node.addChildNode(sphereNode)
         
-        node.runAction(SCNAction.repeatForever(SCNAction.move(by: SCNVector3(0, 0.1, 0), duration: 1)))
+        node.runAction(SCNAction.repeatForever(SCNAction.move(by: SCNVector3(0, 0.01, 0), duration: 1)))
     }
     
     func captureCamera() -> CGImage?{
