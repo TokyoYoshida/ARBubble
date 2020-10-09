@@ -26,10 +26,15 @@ class WaterBubbleViewController: UIViewController, ARSCNViewDelegate {
     var nowRecording: Bool = false
     let bubbleNodeName = "Bubble"
     
+    let orientation = UIApplication.shared.statusBarOrientation
+    var viewportSize: CGSize = CGSize(width: 0, height: 0)
+
     @IBOutlet var sceneView: ARSCNView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        viewportSize = self.sceneView.bounds.size
         
         sceneView.delegate = self
         
@@ -50,12 +55,13 @@ class WaterBubbleViewController: UIViewController, ARSCNViewDelegate {
     
     func updateNodesTexture() {
         func calcTextureUV(node: SCNNode) -> (u: Float, v: Float){
+
             let width = self.view.frame.width
             let height = self.view.frame.height
 
             let screenPos = sceneView.projectPoint(node.position)
-            let u = screenPos.x / Float(width)
-            let v = screenPos.y / Float(height) * -1
+            let u = screenPos.x// / Float(width)
+            let v = screenPos.y// / Float(height)
             
             return (u: u,v: v)
         }
@@ -77,8 +83,11 @@ class WaterBubbleViewController: UIViewController, ARSCNViewDelegate {
             let uv = calcTextureUV(node: node)
             data.x = uv.u
             data.y = uv.v
-            let uniformsData = Data(bytes: &data, count: MemoryLayout<GlobalData>.size)
-            node.geometry?.firstMaterial?.setValue(uniformsData, forKey: "globalData")
+            let uniformsData = Data(bytes: &data, count: MemoryLayout<GlobalData2>.size)
+//            node.geometry?.firstMaterial?.setValue(uniformsData, forKey: "globalData")
+            if i == 0 {
+                print("uv = \(uv.u),\(uv.v)")
+            }
         }
     }
 
@@ -120,9 +129,14 @@ class WaterBubbleViewController: UIViewController, ARSCNViewDelegate {
     
     func captureCamera() -> CGImage?{
         guard let frame = sceneView.session.currentFrame else {return nil}
+
+
         let pixelBuffer = frame.capturedImage
 
-        let image = CIImage(cvPixelBuffer: pixelBuffer)
+        var image = CIImage(cvPixelBuffer: pixelBuffer)
+
+        let transform = frame.displayTransform(for: orientation, viewportSize: viewportSize).inverted()
+        image = image.transformed(by: transform)
 
         let context = CIContext(options:nil)
         guard let cameraImage = context.createCGImage(image, from: image.extent) else {return nil}
