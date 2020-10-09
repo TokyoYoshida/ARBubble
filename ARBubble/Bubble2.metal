@@ -83,7 +83,7 @@ float4 waterColor(float time, float2 sp) {
     
     c /= float(8);
     c = 1.5 - sqrt(c);
-    return float4(float3(c * c * c * c), 0.0) + float4(0.0, 0.4, 0.55, 1.0);
+    return float4(float3(c * c * c * c), 0.0) + float4(0.0, 0.4, 0.55, 0.001);
 }
 
 
@@ -103,8 +103,8 @@ fragment float4 fragmentShader2(ColorInOut2 in          [[ stage_in] ],
     float4 color = diffuseTexture.sample(sampler2d, samp);
 //    color.r = 1;
     float4 water = waterColor(time, uv);
-    float4 result = dot(color, water);
+    float4 result = color + water;
     
-    return water;
+    return result;
 }
 
