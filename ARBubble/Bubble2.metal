@@ -34,15 +34,14 @@ struct ColorInOut2
 };
 
 vertex ColorInOut2 vertexShader2(VertexInput2          in       [[ stage_in ]],
-                               constant NodeBuffer2& scn_node [[ buffer(0) ]],
-                                 uint vid [[ vertex_id ]])
+                               constant NodeBuffer2& scn_node [[ buffer(0) ]])
 {
     ColorInOut2 out;
-    float3 uv = in.position[vid];
+    float3 uv = in.position;
     uv.x += uv.y;
     uv.z += uv.y;
-//    out.position = scn_node.modelViewProjectionTransform * float4(uv, 1.0);
-    out.position = float4(uv, 1.0);
+    out.position = scn_node.modelViewProjectionTransform * float4(in.position, 1.0);
+//    out.position = float4(uv, 1.0);
     out.texCoords = in.texCoords;
     
     return out;

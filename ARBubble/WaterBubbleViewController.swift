@@ -102,7 +102,7 @@ class WaterBubbleViewController: UIViewController, ARSCNViewDelegate {
         
         guard let material = sphereNode.geometry?.firstMaterial else {return}
         let program = SCNProgram()
-        program.vertexFunctionName = "vertexShader"
+        program.vertexFunctionName = "vertexShader2"
         program.fragmentFunctionName = "fragmentShader2"
             sphereNode.geometry?.firstMaterial?.program = program
             
@@ -110,7 +110,7 @@ class WaterBubbleViewController: UIViewController, ARSCNViewDelegate {
         var data = GlobalData2()
         data.time = time
         globalData += [data]
-        let uniformsData = Data(bytes: &data, count: MemoryLayout<GlobalData>.size)
+        let uniformsData = Data(bytes: &data, count: MemoryLayout<GlobalData2>.size)
         sphereNode.geometry?.firstMaterial?.setValue(uniformsData, forKey: "globalData")
         if let cameraImage = captureCamera() {
             let imageProperty = SCNMaterialProperty(contents: cameraImage)
