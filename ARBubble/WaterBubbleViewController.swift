@@ -49,9 +49,17 @@ class WaterBubbleViewController: UIViewController, ARSCNViewDelegate {
     }
     
     func updateNodesTexture() {
+        func calcTextureUV(node: SCNNode) -> (u: Float, v: Float){
+            let width = self.view.frame.width
+            let height = self.view.frame.height
+
+            let screenPos = sceneView.projectPoint(node.position)
+            let u = screenPos.x / Float(width)
+            let v = screenPos.y / Float(height) * -1
+            
+            return (u: u,v: v)
+        }
         let time = Float(Date().timeIntervalSince(startDate))
-        let width = self.view.frame.width
-        let height = self.view.frame.height
 
         guard let cameraImage = captureCamera() else {return}
         let imageProperty = SCNMaterialProperty(contents: cameraImage)
@@ -63,20 +71,17 @@ class WaterBubbleViewController: UIViewController, ARSCNViewDelegate {
             material.diffuse.contents = cameraImage
             material.setValue(imageProperty, forKey: "diffuseTexture")
 
-            let screenPos = sceneView.projectPoint(node.position)
 
             var data = globalData[i]
             data.time = time
-            data.x = screenPos.x
-            data.y = screenPos.y
+            let uv = calcTextureUV(node: node)
+            data.x = uv.u
+            data.y = uv.v
             let uniformsData = Data(bytes: &data, count: MemoryLayout<GlobalData>.size)
             node.geometry?.firstMaterial?.setValue(uniformsData, forKey: "globalData")
         }
     }
 
-    func updateTime(_ node: SCNNode) {
-    }
-    
     func renderer(_ renderer: SCNSceneRenderer, didAdd node: SCNNode, for anchor: ARAnchor) {
         guard !(anchor is ARPlaneAnchor) else { return }
         addBubble(node: node)
@@ -85,11 +90,7 @@ class WaterBubbleViewController: UIViewController, ARSCNViewDelegate {
     func addBubble(node: SCNNode) {
         let sphereNode = SCNNode()
 
-        Timer.scheduledTimer(withTimeInterval: 1.0/60.0, repeats: true, block: { (timer) in
-            self.updateTime(sphereNode)
-        })
-
-        sphereNode.geometry = SCNSphere(radius: 0.02)
+        sphereNode.geometry = SCNBox(width: 0.1, height: 0.1, length: 0.1, chamferRadius: 0)//SCNSphere(radius: 0.02)
         sphereNode.position.y += Float(0.05)
         
         guard let material = sphereNode.geometry?.firstMaterial else {return}
