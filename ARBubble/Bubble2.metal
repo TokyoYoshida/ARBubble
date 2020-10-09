@@ -37,11 +37,15 @@ vertex ColorInOut2 vertexShader2(VertexInput2          in       [[ stage_in ]],
                                constant NodeBuffer2& scn_node [[ buffer(0) ]])
 {
     ColorInOut2 out;
-    float3 uv = in.position;
-    uv.x += uv.y*0.5;
-    uv.z += uv.y*0.1;
-    out.position = scn_node.modelViewProjectionTransform * float4(uv, 1.0);
+    float3 pos = in.position;
+//    uv.x += sin(uv.y);
+//    uv.z += uv.y*0.1;
+    pos.x += cos(pos.y*100)*0.01;
+    pos.z += cos(pos.y*100)*0.01;
+    float4 transformed = scn_node.modelViewProjectionTransform * float4(pos, 1.0);
+//    transformed.x += cos(transformed.y);
 //    out.position = float4(uv, 1.0);
+    out.position = transformed;
     out.texCoords = in.texCoords;
     
     return out;
