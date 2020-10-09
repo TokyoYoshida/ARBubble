@@ -63,7 +63,7 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         
         let program = SCNProgram()
         program.vertexFunctionName = "vertexShader"
-        program.fragmentFunctionName = "fragmentShader"
+        program.fragmentFunctionName = "fragmentShader2"
         sphereNode.geometry?.firstMaterial?.program = program
         
         let time = Float(Date().timeIntervalSince(startDate))

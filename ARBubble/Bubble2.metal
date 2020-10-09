@@ -13,6 +13,10 @@ using namespace metal;
 
 #include <SceneKit/scn_metal>
 
+struct GlobalData2 {
+    float time;
+};
+
 struct VertexInput2 {
     float3 position  [[attribute(SCNVertexSemanticPosition)]];
     float2 texCoords [[attribute(SCNVertexSemanticTexcoord0)]];
@@ -46,14 +50,15 @@ float3 hsv2rgb2(  float3 c )
 }
 
 fragment float4 fragmentShader2(ColorInOut2 in          [[ stage_in] ],
-                              constant   float& time [[ buffer(0) ]])
+                                texture2d<float, access::sample> diffuseTexture [[texture(0)]],
+                              device GlobalData2 &globalData [[buffer(1)]])
 {
+    constexpr sampler sampler2d(coord::normalized, filter::linear, address::repeat);
     float2 position = in.texCoords;
+    float time =globalData.time;
     
-    float3 color = float3(0.1, 0.1, 0.1);
-    
-    color = hsv2rgb2(float3(time * 0.3 + position.x - position.y,0.5,1.0));
+    float4 color = diffuseTexture.sample(sampler2d, in.texCoords);
 
-    return float4(color,0.5);
+    return color;
 }
 

@@ -36,7 +36,7 @@ class WaterBubbleViewController: UIViewController, ARSCNViewDelegate {
         sceneView.session.run(configuration)
 
         Timer.scheduledTimer(withTimeInterval: 1.0/60.0, repeats: true, block: { (timer) in
-            self.updateNodesTexture()
+//            self.updateNodesTexture()
         })
     }
     
@@ -76,15 +76,16 @@ class WaterBubbleViewController: UIViewController, ARSCNViewDelegate {
         guard let material = sphereNode.geometry?.firstMaterial else {return}
         let program = SCNProgram()
         program.vertexFunctionName = "vertexShader"
-        program.fragmentFunctionName = "fragmentShader"
-    //        sphereNode.geometry?.firstMaterial?.program = program
+        program.fragmentFunctionName = "fragmentShader2"
+            sphereNode.geometry?.firstMaterial?.program = program
             
         let time = Float(Date().timeIntervalSince(startDate))
         globalData.time = time
-//        let uniformsData = Data(bytes: &globalData, count: MemoryLayout<GlobalData>.size)
-//        sphereNode.geometry?.firstMaterial?.setValue(uniformsData, forKey: "globalData")
+        let uniformsData = Data(bytes: &globalData, count: MemoryLayout<GlobalData>.size)
+        sphereNode.geometry?.firstMaterial?.setValue(uniformsData, forKey: "globalData")
         let cameraImage = captureCamera()
-        material.diffuse.contents = cameraImage
+        let imageProperty = SCNMaterialProperty(contents: cameraImage)
+        material.setValue(imageProperty, forKey: "diffuseTexture")
         material.lightingModel = .lambert
         sphereNode.name = bubbleNodeName
             
