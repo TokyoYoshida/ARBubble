@@ -100,7 +100,7 @@ class WaterBubbleViewController: UIViewController, ARSCNViewDelegate {
     func addBubble(node: SCNNode) {
         let sphereNode = SCNNode()
 
-        sphereNode.geometry = SCNBox(width: 0.1, height: 0.1, length: 0.1, chamferRadius: 0)//SCNSphere(radius: 0.02)
+        sphereNode.geometry = SCNSphere(radius: 0.02) // SCNBox(width: 0.1, height: 0.1, length: 0.1, chamferRadius: 0)//SCNSphere(radius: 0.02)
         sphereNode.position.y += Float(0.05)
         
         guard let material = sphereNode.geometry?.firstMaterial else {return}
