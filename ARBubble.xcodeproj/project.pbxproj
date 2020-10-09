@@ -16,7 +16,7 @@
 		1ECAF77C2529BE6C00666EEC /* ARBubbleUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1ECAF77B2529BE6C00666EEC /* ARBubbleUITests.swift */; };
 		1ECAF78A2529BF1500666EEC /* Bubble1.metal in Sources */ = {isa = PBXBuildFile; fileRef = 1ECAF7892529BF1500666EEC /* Bubble1.metal */; };
 		1ECAF78C2529BF3E00666EEC /* Bubble2.metal in Sources */ = {isa = PBXBuildFile; fileRef = 1ECAF78B2529BF3E00666EEC /* Bubble2.metal */; };
-		1EFF4A97252FBF0200D8FEE6 /* WaterBubbleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EFF4A96252FBF0200D8FEE6 /* WaterBubbleViewController.swift */; };
+		1EFF4A97252FBF0200D8FEE6 /* TransparentBubbleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EFF4A96252FBF0200D8FEE6 /* TransparentBubbleViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -52,7 +52,7 @@
 		1ECAF77D2529BE6C00666EEC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		1ECAF7892529BF1500666EEC /* Bubble1.metal */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.metal; path = Bubble1.metal; sourceTree = "<group>"; };
 		1ECAF78B2529BF3E00666EEC /* Bubble2.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = Bubble2.metal; sourceTree = "<group>"; };
-		1EFF4A96252FBF0200D8FEE6 /* WaterBubbleViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WaterBubbleViewController.swift; sourceTree = "<group>"; };
+		1EFF4A96252FBF0200D8FEE6 /* TransparentBubbleViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransparentBubbleViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -105,7 +105,7 @@
 			children = (
 				1ECAF7592529BE6900666EEC /* AppDelegate.swift */,
 				1ECAF75B2529BE6900666EEC /* ViewController.swift */,
-				1EFF4A96252FBF0200D8FEE6 /* WaterBubbleViewController.swift */,
+				1EFF4A96252FBF0200D8FEE6 /* TransparentBubbleViewController.swift */,
 				1ECAF75F2529BE6900666EEC /* Main.storyboard */,
 				1ECAF7892529BF1500666EEC /* Bubble1.metal */,
 				1ECAF78B2529BF3E00666EEC /* Bubble2.metal */,
@@ -267,7 +267,7 @@
 			files = (
 				1ECAF78C2529BF3E00666EEC /* Bubble2.metal in Sources */,
 				1ECAF78A2529BF1500666EEC /* Bubble1.metal in Sources */,
-				1EFF4A97252FBF0200D8FEE6 /* WaterBubbleViewController.swift in Sources */,
+				1EFF4A97252FBF0200D8FEE6 /* TransparentBubbleViewController.swift in Sources */,
 				1ECAF75C2529BE6900666EEC /* ViewController.swift in Sources */,
 				1ECAF75A2529BE6900666EEC /* AppDelegate.swift in Sources */,
 			);
