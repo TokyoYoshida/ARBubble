@@ -60,8 +60,8 @@ class WaterBubbleViewController: UIViewController, ARSCNViewDelegate {
             let height = self.view.frame.height
 
             let screenPos = sceneView.projectPoint(node.position)
-            let u = screenPos.x// / Float(width)
-            let v = screenPos.y// / Float(height)
+            let u = screenPos.x / Float(width)
+            let v = screenPos.y / Float(height)
             
             return (u: u,v: v)
         }
@@ -74,20 +74,21 @@ class WaterBubbleViewController: UIViewController, ARSCNViewDelegate {
         }
         for (i, node) in nodes.enumerated() {
             guard let material = node.geometry?.firstMaterial else {return}
+            guard let parent = node.parent else {return}
             material.diffuse.contents = cameraImage
             material.setValue(imageProperty, forKey: "diffuseTexture")
 
 
             var data = globalData[i]
             data.time = time
-            let uv = calcTextureUV(node: node)
+            let uv = calcTextureUV(node: parent)
             data.x = uv.u
             data.y = uv.v
             let uniformsData = Data(bytes: &data, count: MemoryLayout<GlobalData2>.size)
-//            node.geometry?.firstMaterial?.setValue(uniformsData, forKey: "globalData")
-            if i == 0 {
-                print("uv = \(uv.u),\(uv.v)")
-            }
+            node.geometry?.firstMaterial?.setValue(uniformsData, forKey: "globalData")
+//            if i == 0 {
+//                print("y = \(uv.v)")
+//            }
         }
     }
 
