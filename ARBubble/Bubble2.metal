@@ -15,7 +15,8 @@ using namespace metal;
 
 struct GlobalData2 {
     float time;
-    float x, y, width, height;
+    float x, y;
+    int32_t id;
 };
 
 struct VertexInput2 {
@@ -42,15 +43,18 @@ float rand(float3 init_sheed)
 
 vertex ColorInOut2 vertexShader2(VertexInput2          in       [[ stage_in ]],
                                  constant SCNSceneBuffer& scn_frame [[buffer(0)]],
-                               constant NodeBuffer2& scn_node [[ buffer(1) ]])
+                               constant NodeBuffer2& scn_node [[ buffer(1) ]],
+                                 device GlobalData2 &globalData [[buffer(2)]],
+                                 uint iid [[ instance_id ]])
 {
     ColorInOut2 out;
     float3 pos = in.position;
+    float time = globalData.time;
 //    uv.x += sin(uv.y);
 //    uv.z += uv.y*0.1;
-    pos.x += cos(pos.y*100 + scn_frame.time)*0.01;
-    pos.y += cos(pos.x*100 + scn_frame.time)*0.01;
-    pos.z += cos(pos.y*100 + scn_frame.time)*0.01;
+    pos.x += cos(pos.y*100 + scn_frame.time + globalData.id)*0.01;
+    pos.y += cos(pos.x*100 + scn_frame.time + globalData.id)*0.01;
+    pos.z += cos(pos.y*100 + scn_frame.time + globalData.id)*0.01;
     float4 transformed = scn_node.modelViewProjectionTransform * float4(pos, 1.0);
 //    transformed.x += cos(transformed.y);
 //    out.position = float4(uv, 1.0);

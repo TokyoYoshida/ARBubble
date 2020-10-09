@@ -14,8 +14,7 @@ struct GlobalData2 {
     var time: Float = 0
     var x: Float = 0
     var y: Float = 0
-    var width: Float = 0
-    var height: Float = 0
+    var id: Int32 = 0
 }
 
 class WaterBubbleViewController: UIViewController, ARSCNViewDelegate {
@@ -109,6 +108,7 @@ class WaterBubbleViewController: UIViewController, ARSCNViewDelegate {
         let time = Float(Date().timeIntervalSince(startDate))
         var data = GlobalData2()
         data.time = time
+        data.id = Int32(globalData.count)
         globalData += [data]
         let uniformsData = Data(bytes: &data, count: MemoryLayout<GlobalData2>.size)
         sphereNode.geometry?.firstMaterial?.setValue(uniformsData, forKey: "globalData")
