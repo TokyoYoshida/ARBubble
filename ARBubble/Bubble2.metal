@@ -58,7 +58,8 @@ fragment float4 fragmentShader2(ColorInOut2 in          [[ stage_in] ],
     float time =globalData.time;
     
     float4 color = diffuseTexture.sample(sampler2d, in.texCoords);
-
+    color.r = 1;
+    
     return color;
 }
 
