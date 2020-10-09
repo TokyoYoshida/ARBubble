@@ -91,7 +91,7 @@ class WaterBubbleViewController: UIViewController, ARSCNViewDelegate {
 
         node.addChildNode(sphereNode)
         
-        node.runAction(SCNAction.repeatForever(SCNAction.move(by: SCNVector3(0, 0.1, 0), duration: 1)))
+        node.runAction(SCNAction.repeatForever(SCNAction.move(by: SCNVector3(0, 0.01, 0), duration: 1)))
     }
     
     func captureCamera() -> CGImage?{
