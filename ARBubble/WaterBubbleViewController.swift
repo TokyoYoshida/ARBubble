@@ -36,18 +36,20 @@ class WaterBubbleViewController: UIViewController, ARSCNViewDelegate {
         sceneView.session.run(configuration)
 
         Timer.scheduledTimer(withTimeInterval: 1.0/60.0, repeats: true, block: { (timer) in
-//            self.updateNodesTexture()
+            self.updateNodesTexture()
         })
     }
     
     func updateNodesTexture() {
-        let cameraImage = captureCamera()
+        guard let cameraImage = captureCamera() else {return}
+        let imageProperty = SCNMaterialProperty(contents: cameraImage)
         let nodes = sceneView.scene.rootNode.childNodes.compactMap {
             $0.childNode(withName: bubbleNodeName, recursively: true)
         }
         for node in nodes {
             guard let material = node.geometry?.firstMaterial else {return}
             material.diffuse.contents = cameraImage
+            material.setValue(imageProperty, forKey: "diffuseTexture")
         }
     }
 

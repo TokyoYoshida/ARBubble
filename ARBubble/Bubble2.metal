@@ -56,8 +56,11 @@ fragment float4 fragmentShader2(ColorInOut2 in          [[ stage_in] ],
     constexpr sampler sampler2d(coord::normalized, filter::linear, address::repeat);
     float2 uv = in.texCoords;
     float time =globalData.time;
+
+    float2 alpha = float2(5, 5);
+    float2 center = float2(0.5, 0.5);
     
-    float2 samp = uv / 5;
+    float2 samp = ((uv - center) / alpha) + center;
     float4 color = diffuseTexture.sample(sampler2d, samp);
 //    color.r = 1;
     
