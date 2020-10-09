@@ -33,6 +33,13 @@ struct ColorInOut2
     float2 texCoords;
 };
 
+float rand(float3 init_sheed)
+{
+    int seed = init_sheed.x + init_sheed.y * 57 + init_sheed.z * 241;
+    seed= (seed<< 13) ^ seed;
+    return (( 1.0 - ( (seed * (seed * seed * 15731 + 789221) + 1376312589) & 2147483647) / 1073741824.0f) + 1.0f) / 2.0f;
+}
+
 vertex ColorInOut2 vertexShader2(VertexInput2          in       [[ stage_in ]],
                                  constant SCNSceneBuffer& scn_frame [[buffer(0)]],
                                constant NodeBuffer2& scn_node [[ buffer(1) ]])
@@ -42,6 +49,7 @@ vertex ColorInOut2 vertexShader2(VertexInput2          in       [[ stage_in ]],
 //    uv.x += sin(uv.y);
 //    uv.z += uv.y*0.1;
     pos.x += cos(pos.y*100 + scn_frame.time)*0.01;
+    pos.y += cos(pos.x*100 + scn_frame.time)*0.01;
     pos.z += cos(pos.y*100 + scn_frame.time)*0.01;
     float4 transformed = scn_node.modelViewProjectionTransform * float4(pos, 1.0);
 //    transformed.x += cos(transformed.y);
