@@ -52,9 +52,9 @@ vertex ColorInOut2 vertexShader2(VertexInput2          in       [[ stage_in ]],
     float time = globalData.time;
 //    uv.x += sin(uv.y);
 //    uv.z += uv.y*0.1;
-    pos.x += cos(pos.y*100 + scn_frame.time + globalData.id)*0.01;
-    pos.y += cos(pos.x*100 + scn_frame.time + globalData.id)*0.01;
-    pos.z += cos(pos.y*100 + scn_frame.time + globalData.id)*0.01;
+    pos.x += cos(pos.y*100 + scn_frame.time + globalData.id)*0.005;
+    pos.y += cos(pos.x*100 + scn_frame.time + globalData.id)*0.005;
+    pos.z += cos(pos.y*100 + scn_frame.time + globalData.id)*0.005;
     float4 transformed = scn_node.modelViewProjectionTransform * float4(pos, 1.0);
 //    transformed.x += cos(transformed.y);
 //    out.position = float4(uv, 1.0);
