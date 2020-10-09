@@ -10,10 +10,18 @@ import UIKit
 import ARKit
 import ReplayKit
 
+struct GlobalData2 {
+    var time: Float = 0
+    var x: Float = 0
+    var y: Float = 0
+    var width: Float = 0
+    var height: Float = 0
+}
+
 class WaterBubbleViewController: UIViewController, ARSCNViewDelegate {
     @IBOutlet weak var button: UIButton!
     
-    private var globalData: GlobalData = GlobalData(time: Float(0))
+    private var globalData: [GlobalData2] = []
     private var startDate: Date = Date()
     var nowRecording: Bool = false
     let bubbleNodeName = "Bubble"
@@ -41,23 +49,32 @@ class WaterBubbleViewController: UIViewController, ARSCNViewDelegate {
     }
     
     func updateNodesTexture() {
+        let time = Float(Date().timeIntervalSince(startDate))
+        let width = self.view.frame.width
+        let height = self.view.frame.height
+
         guard let cameraImage = captureCamera() else {return}
         let imageProperty = SCNMaterialProperty(contents: cameraImage)
         let nodes = sceneView.scene.rootNode.childNodes.compactMap {
             $0.childNode(withName: bubbleNodeName, recursively: true)
         }
-        for node in nodes {
+        for (i, node) in nodes.enumerated() {
             guard let material = node.geometry?.firstMaterial else {return}
             material.diffuse.contents = cameraImage
             material.setValue(imageProperty, forKey: "diffuseTexture")
+
+            let screenPos = sceneView.projectPoint(node.position)
+
+            var data = globalData[i]
+            data.time = time
+            data.x = screenPos.x
+            data.y = screenPos.y
+            let uniformsData = Data(bytes: &data, count: MemoryLayout<GlobalData>.size)
+            node.geometry?.firstMaterial?.setValue(uniformsData, forKey: "globalData")
         }
     }
 
     func updateTime(_ node: SCNNode) {
-        let time = Float(Date().timeIntervalSince(startDate))
-        globalData.time = time
-        let uniformsData = Data(bytes: &globalData, count: MemoryLayout<GlobalData>.size)
-        node.geometry?.firstMaterial?.setValue(uniformsData, forKey: "globalData")
     }
     
     func renderer(_ renderer: SCNSceneRenderer, didAdd node: SCNNode, for anchor: ARAnchor) {
@@ -82,12 +99,15 @@ class WaterBubbleViewController: UIViewController, ARSCNViewDelegate {
             sphereNode.geometry?.firstMaterial?.program = program
             
         let time = Float(Date().timeIntervalSince(startDate))
-        globalData.time = time
-        let uniformsData = Data(bytes: &globalData, count: MemoryLayout<GlobalData>.size)
+        var data = GlobalData2()
+        data.time = time
+        globalData += [data]
+        let uniformsData = Data(bytes: &data, count: MemoryLayout<GlobalData>.size)
         sphereNode.geometry?.firstMaterial?.setValue(uniformsData, forKey: "globalData")
-        let cameraImage = captureCamera()
-        let imageProperty = SCNMaterialProperty(contents: cameraImage)
-        material.setValue(imageProperty, forKey: "diffuseTexture")
+        if let cameraImage = captureCamera() {
+            let imageProperty = SCNMaterialProperty(contents: cameraImage)
+            material.setValue(imageProperty, forKey: "diffuseTexture")
+        }
         material.lightingModel = .lambert
         sphereNode.name = bubbleNodeName
             
