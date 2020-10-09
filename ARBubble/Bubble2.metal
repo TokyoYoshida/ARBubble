@@ -43,13 +43,6 @@ vertex ColorInOut2 vertexShader2(VertexInput2          in       [[ stage_in ]],
     return out;
 }
 
-float3 hsv2rgb2(  float3 c )
-{
-    float3 rgb = clamp( abs(fmod(c.x*6.0+float3(0.0,4.0,2.0),6.0)-3.0)-1.0, 0.0, 1.0 );
-    rgb = rgb*rgb*(3.0-2.0*rgb);
-    return c.z * mix( float3(1.0), rgb, c.y);
-}
-
 fragment float4 fragmentShader2(ColorInOut2 in          [[ stage_in] ],
                                 texture2d<float, access::sample> diffuseTexture [[texture(0)]],
                               device GlobalData2 &globalData [[buffer(1)]])
