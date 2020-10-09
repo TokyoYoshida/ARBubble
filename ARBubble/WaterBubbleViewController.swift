@@ -67,7 +67,8 @@ class WaterBubbleViewController: UIViewController, ARSCNViewDelegate {
         globalData.time = time
 //        let uniformsData = Data(bytes: &globalData, count: MemoryLayout<GlobalData>.size)
 //        sphereNode.geometry?.firstMaterial?.setValue(uniformsData, forKey: "globalData")
-        material.diffuse.contents = UIColor.init(red: 175/255, green: 255/255, blue: 255/255, alpha: 200/255)
+        let cameraImage = captureCamera()
+        material.diffuse.contents = cameraImage
         material.lightingModel = .lambert
             
         node.addChildNode(sphereNode)
