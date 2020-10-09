@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		1E0AA6A62530F52D0020F223 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E0AA6A52530F52D0020F223 /* Extensions.swift */; };
 		1ECAF75A2529BE6900666EEC /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1ECAF7592529BE6900666EEC /* AppDelegate.swift */; };
 		1ECAF75C2529BE6900666EEC /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1ECAF75B2529BE6900666EEC /* ViewController.swift */; };
 		1ECAF7612529BE6900666EEC /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1ECAF75F2529BE6900666EEC /* Main.storyboard */; };
@@ -38,7 +37,6 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		1E0AA6A52530F52D0020F223 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		1ECAF7562529BE6900666EEC /* ARBubble.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ARBubble.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1ECAF7592529BE6900666EEC /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		1ECAF75B2529BE6900666EEC /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -107,7 +105,6 @@
 			children = (
 				1ECAF7592529BE6900666EEC /* AppDelegate.swift */,
 				1ECAF75B2529BE6900666EEC /* ViewController.swift */,
-				1E0AA6A52530F52D0020F223 /* Extensions.swift */,
 				1EFF4A96252FBF0200D8FEE6 /* WaterBubbleViewController.swift */,
 				1ECAF75F2529BE6900666EEC /* Main.storyboard */,
 				1ECAF7892529BF1500666EEC /* Bubble1.metal */,
@@ -269,7 +266,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				1ECAF78C2529BF3E00666EEC /* Bubble2.metal in Sources */,
-				1E0AA6A62530F52D0020F223 /* Extensions.swift in Sources */,
 				1ECAF78A2529BF1500666EEC /* Bubble1.metal in Sources */,
 				1EFF4A97252FBF0200D8FEE6 /* WaterBubbleViewController.swift in Sources */,
 				1ECAF75C2529BE6900666EEC /* ViewController.swift in Sources */,
