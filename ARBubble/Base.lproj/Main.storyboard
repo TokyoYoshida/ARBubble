@@ -102,7 +102,7 @@
         <!--ARView2-->
         <scene sceneID="iLF-DH-E7h">
             <objects>
-                <viewController id="N0R-BN-AlC" userLabel="ARView2" customClass="TransparentBubbleViewController" customModule="ARBubble" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="N0R-BN-AlC" userLabel="ARView2" customClass="WaterBubbleViewController" customModule="ARBubble" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="vWN-w9-PZq">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>

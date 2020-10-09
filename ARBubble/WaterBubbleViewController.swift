@@ -1,5 +1,5 @@
 //
-//  TransparentBubbleViewController.swift
+//  WaterBubbleViewController.swift
 //  ARBubble
 //
 //  Created by TokyoYoshida on 2020/10/09.
@@ -18,7 +18,7 @@ struct GlobalData2 {
     var height: Float = 0
 }
 
-class TransparentBubbleViewController: UIViewController, ARSCNViewDelegate {
+class WaterBubbleViewController: UIViewController, ARSCNViewDelegate {
     @IBOutlet weak var button: UIButton!
     
     private var globalData: [GlobalData2] = []
@@ -168,7 +168,7 @@ class TransparentBubbleViewController: UIViewController, ARSCNViewDelegate {
     }
 }
 
-extension TransparentBubbleViewController {
+extension WaterBubbleViewController {
     func startRecording() {
         guard !RPScreenRecorder.shared().isRecording else { return }
         RPScreenRecorder.shared().startRecording(handler: { (error) in
@@ -189,7 +189,7 @@ extension TransparentBubbleViewController {
     }
 }
 
-extension TransparentBubbleViewController: RPPreviewViewControllerDelegate {
+extension WaterBubbleViewController: RPPreviewViewControllerDelegate {
     func previewControllerDidFinish(_ previewController: RPPreviewViewController) {
         DispatchQueue.main.async {
             previewController.dismiss(animated: true, completion: nil)
