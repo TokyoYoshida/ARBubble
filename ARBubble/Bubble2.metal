@@ -64,6 +64,29 @@ vertex ColorInOut2 vertexShader2(VertexInput2          in       [[ stage_in ]],
     return out;
 }
 
+float4 waterColor(float time, float2 sp) {
+    float2 p = sp * 15.0 - float2(20.0);
+    float2 i = p;
+    float c = 0.0; // brightness; larger -> darker
+    float inten = 0.025; // brightness; larger -> brighter
+    float speed = 1.5; // larger -> slower
+    float speed2 = 3.0; // larger -> slower
+    float freq = 0.8; // ripples
+    float xflow = 1.5; // flow speed in x direction
+    float yflow = 0.0; // flow speed in y direction
+
+    for (int n = 0; n < 8; n++) {
+        float t = time * (1.0 - (3.0 / (float(n) + speed)));
+        i = p + float2(cos(t - i.x * freq) + sin(t + i.y * freq) + (time * xflow), sin(t - i.y * freq) + cos(t + i.x * freq) + (time * yflow));
+        c += 1.0 / length(float2(p.x / (sin(i.x + t * speed2) / inten), p.y / (cos(i.y + t * speed2) / inten)));
+    }
+    
+    c /= float(8);
+    c = 1.5 - sqrt(c);
+    return float4(float3(c * c * c * c), 0.0) + float4(0.0, 0.4, 0.55, 1.0);
+}
+
+
 fragment float4 fragmentShader2(ColorInOut2 in          [[ stage_in] ],
                                 texture2d<float, access::sample> diffuseTexture [[texture(0)]],
                               device GlobalData2 &globalData [[buffer(1)]])
@@ -79,7 +102,9 @@ fragment float4 fragmentShader2(ColorInOut2 in          [[ stage_in] ],
     float2 samp = ((uv - center) / alpha) + center;
     float4 color = diffuseTexture.sample(sampler2d, samp);
 //    color.r = 1;
+    float4 water = waterColor(time, uv);
+    float4 result = dot(color, water);
     
-    return color;
+    return water;
 }
 
