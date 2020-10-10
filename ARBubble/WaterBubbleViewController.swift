@@ -53,16 +53,16 @@ class WaterBubbleViewController: UIViewController, ARSCNViewDelegate {
     }
     
     func updateNodesTexture() {
-        func calcTextureUV(node: SCNNode) -> (u: Float, v: Float){
+        func calcClipArea(node: SCNNode) -> (x: Float, y: Float){
 
             let width = self.view.frame.width
             let height = self.view.frame.height
 
             let screenPos = sceneView.projectPoint(node.position)
-            let u = screenPos.x / Float(width)
-            let v = screenPos.y / Float(height)
+            let x = screenPos.x / Float(width)
+            let y = screenPos.y / Float(height)
             
-            return (u: u,v: v)
+            return (x: x,y: y)
         }
         let time = Float(Date().timeIntervalSince(startDate))
 
@@ -77,12 +77,11 @@ class WaterBubbleViewController: UIViewController, ARSCNViewDelegate {
             material.diffuse.contents = cameraImage
             material.setValue(imageProperty, forKey: "diffuseTexture")
 
-
             var data = globalData[i]
             data.time = time
-            let uv = calcTextureUV(node: parent)
-            data.x = uv.u
-            data.y = uv.v
+            let area = calcClipArea(node: parent)
+            data.x = area.x
+            data.y = area.y
             let uniformsData = Data(bytes: &data, count: MemoryLayout<GlobalData2>.size)
             node.geometry?.firstMaterial?.setValue(uniformsData, forKey: "globalData")
         }
@@ -127,7 +126,6 @@ class WaterBubbleViewController: UIViewController, ARSCNViewDelegate {
     
     func captureCamera() -> CGImage?{
         guard let frame = sceneView.session.currentFrame else {return nil}
-
 
         let pixelBuffer = frame.capturedImage
 
