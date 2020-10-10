@@ -44,20 +44,14 @@ float rand(float3 init_sheed)
 vertex ColorInOut2 vertexShader2(VertexInput2          in       [[ stage_in ]],
                                  constant SCNSceneBuffer& scn_frame [[buffer(0)]],
                                constant NodeBuffer2& scn_node [[ buffer(1) ]],
-                                 device GlobalData2 &globalData [[buffer(2)]],
-                                 uint iid [[ instance_id ]])
+                                 device GlobalData2 &globalData [[buffer(2)]])
 {
     ColorInOut2 out;
     float3 pos = in.position;
-    float time = globalData.time;
-//    uv.x += sin(uv.y);
-//    uv.z += uv.y*0.1;
     pos.x += cos(pos.y*100 + scn_frame.time + globalData.id)*0.005;
     pos.y += cos(pos.x*100 + scn_frame.time + globalData.id)*0.005;
     pos.z += cos(pos.y*100 + scn_frame.time + globalData.id)*0.005;
     float4 transformed = scn_node.modelViewProjectionTransform * float4(pos, 1.0);
-//    transformed.x += cos(transformed.y);
-//    out.position = float4(uv, 1.0);
     out.position = transformed;
     out.texCoords = in.texCoords;
     
@@ -102,7 +96,6 @@ fragment float4 fragmentShader2(ColorInOut2 in          [[ stage_in] ],
     
     float2 samp = ((uv - center) / alpha) + center;
     float4 color = diffuseTexture.sample(sampler2d, samp);
-//    color.r = 1;
     float4 water = waterColor(time, uv);
     float4 result = color + water*0.5;
     
